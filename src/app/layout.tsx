@@ -3,8 +3,10 @@ import { Inter, Roboto, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
-import { ThemeProvider } from "./context /ThemeContext";
+
 import AuthProvider from "@/components/AuthProvider /AuthProvider";
+import ThemeProvider from "@/providers/ThemeProvider";
+import { ThemeContextProvider } from "@/context/ThemeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
@@ -19,19 +21,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-theme="dark">
       <body className={roboto.className}>
-        <ThemeProvider>
-          <AuthProvider>
-            <div className="container">
+        <ThemeContextProvider>
+          <ThemeProvider>
+            <AuthProvider>
               <div className="container">
-                <div className="wrapper">
-                  <Navbar />
-                  {children}
-                  <Footer />
+                <div className="container">
+                  <div className="wrapper">
+                    <Navbar />
+                    {children}
+                    <Footer />
+                  </div>
                 </div>
               </div>
-            </div>
-          </AuthProvider>
-        </ThemeProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </ThemeContextProvider>
       </body>
     </html>
   );
